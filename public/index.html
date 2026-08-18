@@ -3,91 +3,152 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>쇼핑 쇼츠 제작 스튜디오</title>
+<title>쇼핑 쇼츠 제작 스튜디오 (Vercel 배포판)</title>
 <style>
-  :root { --primary: #ff0050; --bg: #0f1015; --card: #1a1c23; --border: #2d3139; --text: #f1f3f5; --sub: #909296; }
+  :root {
+    --primary: #ff0050;
+    --bg: #0f1015;
+    --card: #1a1c23;
+    --border: #2d3139;
+    --text: #f1f3f5;
+    --sub: #909296;
+    --accent-blue: #339af0;
+    --accent-green: #20c997;
+    --accent-yellow: #fcc419;
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
-  .container { max-width: 1300px; margin: 0 auto; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
+  .container { max-width: 1350px; margin: 0 auto; }
   header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 20px; }
-  header h1 { font-size: 22px; color: #fff; }
+  header h1 { font-size: 22px; color: #fff; display: flex; align-items: center; gap: 8px; }
   header h1 span { color: var(--primary); }
-  .layout { display: grid; grid-template-columns: 420px 1fr; gap: 20px; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 18px; }
+  
+  .layout { display: grid; grid-template-columns: 400px 1fr; gap: 20px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px; margin-bottom: 16px; }
+  
   label { display: block; font-size: 13px; font-weight: 600; color: var(--sub); margin-bottom: 6px; }
-  input, textarea { width: 100%; padding: 10px; background: #121318; border: 1px solid var(--border); border-radius: 6px; color: #fff; font-size: 13px; margin-bottom: 12px; }
-  button { cursor: pointer; border: none; border-radius: 6px; font-weight: 600; }
-  .btn-submit { width: 100%; background: var(--primary); color: #fff; padding: 14px; font-size: 15px; }
-  .btn-tab { background: #20232a; color: var(--sub); border: 1px solid var(--border); padding: 8px 14px; margin-right: 6px; }
-  .btn-tab.active { background: var(--primary); color: #fff; }
-  .phone-mockup { width: 300px; height: 530px; background: #000; border-radius: 28px; border: 6px solid #2d3139; position: relative; display: flex; flex-direction: column; justify-content: space-between; padding: 20px 12px; }
+  input, textarea, select { width: 100%; padding: 10px; background: #121318; border: 1px solid var(--border); border-radius: 6px; color: #fff; font-size: 13px; margin-bottom: 12px; }
+  input:focus, textarea:focus, select:focus { outline: none; border-color: var(--primary); }
+  
+  button { cursor: pointer; border: none; border-radius: 6px; font-weight: 600; font-family: inherit; }
+  .btn-submit { width: 100%; background: var(--primary); color: #fff; padding: 14px; font-size: 15px; border-radius: 8px; box-shadow: 0 4px 12px rgba(255,0,80,0.3); }
+  .btn-submit:hover { background: #e00045; }
+  .btn-tab { background: #20232a; color: var(--sub); border: 1px solid var(--border); padding: 8px 14px; margin-right: 6px; border-radius: 6px; font-size: 13px; }
+  .btn-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+  
+  /* 스마트폰 세로 프리뷰 */
+  .phone-mockup { width: 300px; height: 530px; background: #000; border-radius: 28px; border: 6px solid #2d3139; position: relative; display: flex; flex-direction: column; justify-content: space-between; padding: 20px 12px; overflow: hidden; }
   .phone-top { text-align: center; }
-  .t1 { font-size: 15px; font-weight: bold; color: #fff; background: rgba(0,0,0,0.6); display: inline-block; padding: 2px 8px; border-radius: 4px; }
-  .t2 { font-size: 18px; font-weight: 900; color: #ffe066; background: rgba(0,0,0,0.6); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-top: 4px; }
+  .t1 { font-size: 15px; font-weight: bold; color: #fff; background: rgba(0,0,0,0.65); display: inline-block; padding: 2px 8px; border-radius: 4px; }
+  .t2 { font-size: 18px; font-weight: 900; color: #ffe066; background: rgba(0,0,0,0.65); display: inline-block; padding: 2px 8px; border-radius: 4px; margin-top: 4px; }
   .phone-center { text-align: center; background: rgba(0,0,0,0.5); padding: 12px; border-radius: 8px; }
+  .badge-scene { font-size: 11px; background: var(--primary); color: #fff; display: inline-block; padding: 2px 8px; border-radius: 10px; margin-bottom: 6px; font-weight: bold; }
+  .caption-text { font-size: 13px; font-weight: bold; color: #fff; line-height: 1.4; }
+  .phone-bottom { font-size: 11px; color: #aaa; display: flex; justify-content: space-between; }
+  
   table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
-  th, td { border: 1px solid var(--border); padding: 8px; text-align: left; }
-  th { background: #16181f; }
+  th, td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; }
+  th { background: #16181f; color: var(--sub); }
+  
+  .quote-box { background: #2a2310; border-left: 3px solid var(--accent-yellow); padding: 10px 14px; margin: 10px 0; font-size: 12px; color: #ffe066; border-radius: 4px; }
+  .tts-box { background: #132238; border: 1px solid #1c7ed6; border-radius: 6px; padding: 10px; margin-top: 10px; font-size: 12px; color: #a5d8ff; line-height: 1.6; }
+  .sfx-box { background: #2c1b18; border: 1px solid #f76707; border-radius: 6px; padding: 10px; margin-top: 10px; font-size: 12px; color: #ffc078; line-height: 1.6; }
+  
+  .loading-box { display: none; padding: 10px; background: #2b1d3a; border: 1px solid #7048e8; border-radius: 6px; text-align: center; color: #d0bfff; font-size: 13px; margin-top: 10px; font-weight: bold; }
 </style>
 </head>
 <body>
 <div class="container">
   <header>
     <h1>🎬 <span>쇼핑 쇼츠 제작 스튜디오</span> (Vercel 배포판)</h1>
-    <div style="font-size:13px; color:#20c997;">● 서버 연결됨</div>
+    <div style="font-size:13px; color:#20c997; font-weight:bold;">● 서버 연결됨</div>
   </header>
 
   <div class="layout">
+    <!-- 좌측 입력창 -->
     <div>
       <div class="card">
         <label>Google Gemini API Key</label>
         <input type="password" id="apiKey" placeholder="AIzaSy... (입력 시 Vercel 서버가 실시간 호출)">
+
         <label>유튜브 원본 URL</label>
         <input type="text" id="videoUrl" value="https://www.youtube.com/watch?v=sample_son">
-        <label>출연 연예인 (선택)</label>
-        <input type="text" id="celebrity" value="손예진">
-        <label>제품명 (선택)</label>
-        <input type="text" id="productHint" value="프리지아 향수">
-        <label>대본 힌트</label>
-        <textarea id="transcript" rows="5">[02:15 ~ 02:18] 제가 10년째 안 알려준 비밀 향수예요.
-[02:19 ~ 02:22] 스태프들도 매일 물어봤는데 절대 안 알려줬어요.
-[02:22 ~ 02:25] 오늘 처음 공개해요.
-[02:26 ~ 02:29] 산타마리아노벨라 프리지아 향수예요. 3병째 쓰고 있어요.</textarea>
+
         <button class="btn-submit" onclick="callServerAnalyze()">🚀 Vercel AI 서버로 분석하기</button>
+        <div class="loading-box" id="loadingBox">⏳ 제미나이 AI가 영상과 대본을 분석 중입니다...</div>
+      </div>
+
+      <!-- 콤보박스: 분석된 대상 제품 선택 -->
+      <div class="card" style="border-left: 4px solid var(--primary);">
+        <label style="color:#ff758c; font-weight:bold;">📦 분석된 대상 제품 선택 (콤보박스)</label>
+        <select id="productSelect" onchange="onProductChange()"></select>
+
+        <label>출연 연예인 (자동 추출)</label>
+        <input type="text" id="celebrity" value="손예진">
+
+        <label>제품명 (자동 추출)</label>
+        <input type="text" id="productName" value="프리지아 향수">
+
+        <label>해당 제품 타임라인 대본 (자동 추출)</label>
+        <textarea id="transcript" rows="6"></textarea>
       </div>
     </div>
 
+    <!-- 우측 결과창 -->
     <div>
-      <div style="display: grid; grid-template-columns: 320px 1fr; gap: 20px;">
+      <div style="display: grid; grid-template-columns: 300px 1fr; gap: 20px;">
+        <!-- 스마트폰 뷰어 -->
         <div class="phone-mockup">
           <div class="phone-top">
             <div class="t1" id="mockTop1">10년째 비밀 유지</div><br>
             <div class="t2" id="mockTop2">손예진 원픽 향수</div>
           </div>
           <div class="phone-center">
-            <div style="font-size:11px; background:#ff0050; display:inline-block; padding:2px 6px; border-radius:10px; margin-bottom:6px;" id="mockBadge">장면 1 (최강 훅)</div>
-            <div style="font-size:13px; font-weight:bold;" id="mockText">"스태프들도 매일 뭐 뿌렸냐고 물어보는데 절대 안 알려줬어요."</div>
+            <div class="badge-scene" id="mockBadge">장면 1 (최강 훅)</div>
+            <div class="caption-text" id="mockText">"스태프들도 매일 뭐 뿌렸냐고 물어보는데 절대 안 알려줬어요."</div>
           </div>
-          <div style="font-size:11px; color:#aaa;">⏱ 18.5초 (1.1x 배속)</div>
+          <div class="phone-bottom">
+            <span id="mockDuration">⏱ 18.5초</span>
+            <span style="color:#ff0050; font-weight:bold;">⚡ 1.1x 배속</span>
+          </div>
         </div>
 
+        <!-- 결과 리포트 & A/B/C 3가지 제안 탭 -->
         <div>
           <div class="card">
-            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-              <b style="font-size:16px;" id="resProduct">프리지아 오 드 코롱 (산타마리아노벨라)</b>
-              <span style="background:#2b8a3e; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:bold;" id="resGrade">S (즉시 제작) · 96점</span>
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px; align-items:center;">
+              <b style="font-size:16px; color:#fff;" id="resProduct">프리지아 향수 (산타마리아노벨라)</b>
+              <span style="background:#2b8a3e; padding:3px 10px; border-radius:12px; font-size:12px; font-weight:bold; color:#fff;" id="resGrade">S (즉시 제작) · 96점</span>
             </div>
-            <div style="font-size:13px; color:#74c0fc;" id="resType">주 유형: [A2] N병·N개 소진형</div>
-            <div style="background:#2a2310; border-left:3px solid #fcc419; padding:8px 12px; margin-top:10px; font-size:12px; color:#ffe066;" id="resHook">
-              💡 최강 훅: "제가 진짜 10년째 아무한테도 안 알려준 비밀 향수가 있거든요."
+            <div style="font-size:13px; color:var(--accent-blue);" id="resType">주 유형: [A2] N병·N개 소진형</div>
+            <div class="quote-box" id="resHook">
+              💡 <b>최강 훅:</b> "제가 진짜 10년째 아무한테도 안 알려준 비밀 향수가 있거든요."
             </div>
           </div>
 
+          <!-- 3가지 제안 탭 버튼 (A안, B안, C안) -->
           <div class="card">
-            <div style="margin-bottom:10px;">
-              <button class="btn-tab active">💡 A안: 궁금증·반전형</button>
+            <div style="margin-bottom:12px; display:flex; flex-wrap:wrap; gap:6px;">
+              <button class="btn-tab active" id="tabA" onclick="switchVariant('A')">💡 A안: 궁금증·반전형</button>
+              <button class="btn-tab" id="tabB" onclick="switchVariant('B')">🔥 B안: 문제·해결형</button>
+              <button class="btn-tab" id="tabC" onclick="switchVariant('C')">⭐ C안: 인물·루틴·신뢰형</button>
             </div>
+
+            <!-- 타임라인 표 -->
             <div id="timelineContainer"></div>
+
+            <!-- TTS 2개 박스 -->
+            <div class="tts-box">
+              <b>🎙️ 생성된 TTS 내레이션 (정확히 2개 / 동일 화자):</b><br>
+              <span id="resTts1">• TTS 1: </span><br>
+              <span id="resTts2">• TTS 2: </span>
+            </div>
+
+            <!-- 효과음 5개 박스 -->
+            <div class="sfx-box">
+              <b>🔔 효과음(SFX) 5개 배치 위치:</b><br>
+              <span id="resSfx"></span>
+            </div>
           </div>
         </div>
       </div>
@@ -96,40 +157,113 @@
 </div>
 
 <script>
+let globalProductsData = [];
+let selectedProductIndex = 0;
+let currentVariantType = 'A';
+
 async function callServerAnalyze() {
-  const payload = {
-    apiKey: document.getElementById('apiKey').value.trim(),
-    videoUrl: document.getElementById('videoUrl').value.trim(),
-    celebrity: document.getElementById('celebrity').value.trim(),
-    productHint: document.getElementById('productHint').value.trim(),
-    transcript: document.getElementById('transcript').value.trim()
-  };
+  const apiKey = document.getElementById('apiKey').value.trim();
+  const videoUrl = document.getElementById('videoUrl').value.trim();
+  const loadingBox = document.getElementById('loadingBox');
+
+  if (apiKey) localStorage.setItem('gemini_api_key', apiKey);
+  loadingBox.style.display = 'block';
 
   try {
     const res = await fetch('/api/analyze', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify({ apiKey, videoUrl })
     });
     const data = await res.json();
+    loadingBox.style.display = 'none';
 
-    document.getElementById('mockTop1').innerText = data.top1;
-    document.getElementById('mockTop2').innerText = data.top2;
-    document.getElementById('resProduct').innerText = `${data.product} (${data.brand})`;
-    document.getElementById('resGrade').innerText = `${data.grade} · ${data.score}점`;
-    document.getElementById('resType').innerText = `주 유형: ${data.viralTypePrimary}`;
-    document.getElementById('resHook').innerText = `💡 최강 훅: "${data.hookQuote}"`;
-
-    let rows = '';
-    data.scenes.forEach(s => {
-      rows += `<tr><td><b>${s.scene}</b></td><td>${s.time}</td><td>${s.action}</td><td style="color:#ff8787;">${s.sfx}</td></tr>`;
-    });
-    document.getElementById('timelineContainer').innerHTML = `<table><thead><tr><th>장면</th><th>타임라인</th><th>대사 내용</th><th>효과음</th></tr></thead><tbody>${rows}</tbody></table>`;
+    if (data.products && data.products.length > 0) {
+      globalProductsData = data.products;
+      document.getElementById('celebrity').value = data.celebrity || "손예진";
+      populateProductSelect(data.products);
+      selectProduct(0);
+    }
   } catch (err) {
-    alert("서버 통신 에러: " + err.message);
+    loadingBox.style.display = 'none';
+    alert("서버 분석 오류: " + err.message);
   }
 }
-window.onload = callServerAnalyze;
+
+function populateProductSelect(products) {
+  const select = document.getElementById('productSelect');
+  select.innerHTML = '';
+  products.forEach((p, idx) => {
+    const opt = document.createElement('option');
+    opt.value = idx;
+    opt.innerText = `[${idx + 1}위] ${p.product} (${p.brand}) - ${p.score}점 (${p.grade})`;
+    select.appendChild(opt);
+  });
+}
+
+function onProductChange() {
+  const idx = parseInt(document.getElementById('productSelect').value);
+  selectProduct(idx);
+}
+
+function selectProduct(idx) {
+  selectedProductIndex = idx;
+  const p = globalProductsData[idx];
+  if (!p) return;
+
+  // 좌측 폼 자동 업데이트
+  document.getElementById('productName').value = p.product;
+  document.getElementById('transcript').value = p.transcriptText || "";
+
+  // 우측 채점 정보 업데이트
+  document.getElementById('resProduct').innerText = `${p.product} (${p.brand})`;
+  document.getElementById('resGrade').innerText = `${p.grade} · ${p.score}점`;
+  document.getElementById('resType').innerText = `주 유형: ${p.viralTypePrimary} (보조: ${p.viralTypeSecondary})`;
+  document.getElementById('resHook').innerHTML = `💡 <b>최강 훅:</b> "${p.hookQuote}"`;
+
+  // 기본 A안 표시
+  switchVariant('A');
+}
+
+function switchVariant(type) {
+  currentVariantType = type;
+  document.getElementById('tabA').className = `btn-tab ${type === 'A' ? 'active' : ''}`;
+  document.getElementById('tabB').className = `btn-tab ${type === 'B' ? 'active' : ''}`;
+  document.getElementById('tabC').className = `btn-tab ${type === 'C' ? 'active' : ''}`;
+
+  const p = globalProductsData[selectedProductIndex];
+  if (!p || !p.variants) return;
+
+  const v = p.variants[type];
+  if (!v) return;
+
+  // 스마트폰 뷰어 업데이트
+  document.getElementById('mockTop1').innerText = v.top1;
+  document.getElementById('mockTop2').innerText = v.top2;
+  document.getElementById('mockDuration').innerText = `⏱ ${v.duration}`;
+  if (v.scenes && v.scenes.length > 0) {
+    document.getElementById('mockBadge').innerText = v.scenes[0].scene;
+    document.getElementById('mockText').innerText = `"${v.scenes[0].action}"`;
+  }
+
+  // 타임라인 표 렌더링
+  let rows = '';
+  v.scenes.forEach(s => {
+    rows += `<tr><td><b>${s.scene}</b></td><td><span style="color:#74c0fc;">${s.time}</span></td><td>${s.action}</td><td style="color:#ff8787; font-weight:bold;">${s.sfx}</td></tr>`;
+  });
+  document.getElementById('timelineContainer').innerHTML = `<table><thead><tr><th>장면</th><th>타임라인</th><th>대사 내용</th><th>효과음</th></tr></thead><tbody>${rows}</tbody></table>`;
+
+  // TTS 및 효과음 박스 업데이트
+  document.getElementById('resTts1').innerText = `• TTS 1: ${v.tts1}`;
+  document.getElementById('resTts2').innerText = `• TTS 2: ${v.tts2}`;
+  document.getElementById('resSfx').innerText = v.sfx;
+}
+
+window.onload = function() {
+  const savedKey = localStorage.getItem('gemini_api_key');
+  if (savedKey) document.getElementById('apiKey').value = savedKey;
+  callServerAnalyze();
+};
 </script>
 </body>
 </html>
