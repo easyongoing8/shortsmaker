@@ -1,0 +1,9 @@
+{
+  "name": "shopper-shorts-studio",
+  "version": "1.0.0",
+  "description": "Viral Shopping Shorts AI Studio on Vercel",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {}
+}
